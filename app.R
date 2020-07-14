@@ -2,7 +2,7 @@
 
 library(shiny)
 
-ui <- basicPage(
+ui <- fluidPage(
   h1("Using Reactive"),
   sliderInput(inputId = "myslider", label = "slider1", value = 1, min = 1, max = 20),
   plotOutput(outputId = "plot")
