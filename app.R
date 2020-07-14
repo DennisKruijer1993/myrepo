@@ -1,6 +1,7 @@
 ## A basic shiny app
 
 library(shiny)
+library(shinythemes)
 
 server <- function(input, output, session){
   # input <- interactive part (e.g. buttons, sliders, textfield, etc.)
@@ -8,9 +9,9 @@ server <- function(input, output, session){
   # session <- session information (if no reactivity, you don't need 'session')
 }
 
-ui <- fluidPage(
+ui <- fluidPage(themeSelector(),  # displaying different themes, replace this line when publishing with theme = shinytheme("dark)
   
-  titlePanel(strong("This is the STRONG tag on the Title")),
+  titlePanel(strong("This is the STRONG tag on the Title")),  # using strong as a direct tag
   
   sidebarLayout(
     sidebarPanel(
