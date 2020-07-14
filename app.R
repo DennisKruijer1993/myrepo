@@ -9,7 +9,8 @@ server <- function(input, output, session){
   # session <- session information (if no reactivity, you don't need 'session')
 }
 
-ui <- fluidPage(themeSelector(),  # displaying different themes, replace this line when publishing with theme = shinytheme("dark)
+ui <- fluidPage(themeSelector(),  # displaying different themes, replace this line when publishing with:
+                                  # e.g. theme = shinytheme("darkly"),
   
   titlePanel(strong("This is the STRONG tag on the Title")),  # using strong as a direct tag
   
