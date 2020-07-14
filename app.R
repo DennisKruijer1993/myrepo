@@ -1,4 +1,4 @@
-## A basic shiny app
+## Helpful resources: https://shiny.rstudio.com/gallery/
 
 library(shiny)
 
