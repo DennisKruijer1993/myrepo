@@ -26,13 +26,22 @@ server <- function(input, output, session){
   
   # Table
   output$table <- DT:: renderDataTable(DT::datatable(diam()))
+  
+  # Download Button
+  output$mydownload <- downloadHandler(
+    filename = "test.csv",
+    content = function(file){
+      write.csv(diam(), file)
+    }
+  )
 }
 
 ui <- fluidPage(
   h1("Using the brush feature to select specific observations"),
   plotOutput(outputId = "plot", brush = "user_brush"),
   # plotOutput(outputId = "plot", click = "user_click"),
-  dataTableOutput(outputId = "table")
+  dataTableOutput(outputId = "table"),
+  downloadButton(outputId = "mydownload", label = "Download Table")
 )
 
 shinyApp(ui = ui, server = server)
