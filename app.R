@@ -1,13 +1,22 @@
 ## A basic shiny app
 
 library(shiny)
+library(DT)
+library(shinythemes)
 
-server = function(input, output, session){
+ui <- fluidPage(shinytheme(),
+                
+  
+)
+
+
+server <- function(input, output, session){
   # input <- interactive part (e.g. buttons, sliders, textfield, etc.)
   # output <- calculation
   # session <- session information (if no reactivity, you don't need 'session')
+  
+  data <- read.csv2(file = "course_proj_data.csv")
 }
 
-ui = basicPage("our first basic app")
 
 shinyApp(ui = ui, server = server)
