@@ -61,8 +61,6 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                            
                            # Tab 3
                            tabPanel(title = "DATA TABLE WITH UNDERLYING DATA"))
-                
-                
 )
 
 
@@ -78,7 +76,7 @@ server <- function(input, output, session){
   # Plot
   output$plot <- renderPlot({
     ggplot(data = df(),
-           mapping = aes(MarketCap.in.M, score)) + geom_point()
+           mapping = aes(score, MarketCap.in.M)) + geom_point()
   })
   
   # Brush
@@ -89,7 +87,7 @@ server <- function(input, output, session){
   })
   
   # Table
-  output$table <- DT::renderDataTable(DT::datatable(subdf()))
+  output$dt <- DT::renderDataTable(DT::datatable(subdf()))
 }
 
 
