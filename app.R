@@ -21,7 +21,7 @@ library(DT)
 library(ggplot2)
 library(shinythemes)
 
-ui <- fluidPage(themeSelector(),
+ui <- fluidPage(theme = shinytheme("sandstone"),
                 navbarPage(title = "The Mining Stock Scale",
                            tabPanel(title = "ADJUST YOUR MINING STOCKS"),
                            tabPanel(title = "DOCUMENTATION"),
