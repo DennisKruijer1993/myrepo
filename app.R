@@ -50,11 +50,11 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                                     
                                     # Plot
                                     plotOutput(outputId = "plot", 
-                                               brush = brushOpts(id = "plot_brush")),
+                                               brush = "user_brush"),
                                     
                                     # Data Table
                                     DT::dataTableOutput(outputId = "dt")
-                                    ),
+                           ),
                            
                            # Tab 2
                            tabPanel(title = "DOCUMENTATION"),
@@ -62,33 +62,34 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                            # Tab 3
                            tabPanel(title = "DATA TABLE WITH UNDERLYING DATA"))
                 
-  
+                
 )
 
 
 server <- function(input, output, session){
   
-  data <- read.csv2(file = "course_proj_data.csv")
-  
-  # Sliders
+  # calculation: G1*weight1 + G2*weight2 + G3*weight3
+  df <- reactive({
+    data <- read.csv2(file = "course_proj_data.csv")
+    data$score <- data$G1*input$weight1 + data$G2*input$weight2 + data$G3*input$weight3
+    return(data)
+  })
   
   # Plot
   output$plot <- renderPlot({
-    ggplot(data = data,
-           mapping = aes(data$MarketCap.in.M, )) + geom_point()
+    ggplot(data = df(),
+           mapping = aes(MarketCap.in.M, score)) + geom_point()
   })
   
   # Brush
-  diam <- reactive({
+  subdf <- reactive({
     user_brush <- input$user_brush
-    # user_click <- input$user_click
-    sel <- brushedPoints(diamonds, user_brush)
-    # sel <- nearPoints(diamonds, user_click, theshold = 10, maxpoints = 5)
+    sel <- brushedPoints(df(), user_brush)
     return(sel)
   })
   
   # Table
-  output$table <- DT:: renderDataTable(DT::datatable(diam()))
+  output$table <- DT::renderDataTable(DT::datatable(subdf()))
 }
 
 
