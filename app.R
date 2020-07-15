@@ -50,7 +50,10 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                                     
                                     # Plot
                                     plotOutput(outputId = "plot", 
-                                               brush = brushOpts(id = "plot_brush"))
+                                               brush = brushOpts(id = "plot_brush")),
+                                    
+                                    # Data Table
+                                    DT::dataTableOutput(outputId = "dt")
                                     ),
                            
                            # Tab 2
@@ -64,11 +67,28 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
 
 
 server <- function(input, output, session){
-  # input <- interactive part (e.g. buttons, sliders, textfield, etc.)
-  # output <- calculation
-  # session <- session information (if no reactivity, you don't need 'session')
   
   data <- read.csv2(file = "course_proj_data.csv")
+  
+  # Sliders
+  
+  # Plot
+  output$plot <- renderPlot({
+    ggplot(data = data,
+           mapping = aes(data$MarketCap.in.M, )) + geom_point()
+  })
+  
+  # Brush
+  diam <- reactive({
+    user_brush <- input$user_brush
+    # user_click <- input$user_click
+    sel <- brushedPoints(diamonds, user_brush)
+    # sel <- nearPoints(diamonds, user_click, theshold = 10, maxpoints = 5)
+    return(sel)
+  })
+  
+  # Table
+  output$table <- DT:: renderDataTable(DT::datatable(diam()))
 }
 
 
